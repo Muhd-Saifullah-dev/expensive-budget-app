@@ -1,0 +1,81 @@
+import { createContext, useEffect, useReducer } from "react";
+
+const ExpenseContext = createContext();
+
+const initialState = {
+  expenses: [],
+  laoding: false,
+  error: null,
+};
+
+const expenseReducer = (state, action) => {
+  switch (action.type) {
+    case "ADD_EXPENSES":
+      return { ...state, expenses: [...state.expenses, action.payload] };
+
+    case "DELETE_EXPENSES":
+      return {
+        ...state,
+        expenses: state.filter((expense) => action.payload.id !== expense.id),
+      };
+
+    case "UPDATE_EXPENSES":
+      return {
+        ...state,
+        expenses: state.expenses.map((expense) =>
+          expense.id === action.payload.id ? action.payload : expense
+        ),
+      };
+
+    case "SET_EXPENSES":
+      return { ...state, expenses: action.payload };
+
+    case "SET_LOADING":
+      return { ...state, loading: action.payload };
+
+    case "SET_ERROR":
+      return { ...state, error: action.payload };
+
+    default:
+      return state;
+  }
+};
+
+const ExpenseProvider = ({ children }) => {
+    const [state,dispatch ]=useReducer(expenseReducer,initialState);
+
+    //save expenses to local storage whenever they changed
+    useEffect(()=>{
+       try {
+
+        // expenses tho array jabhi stringify kiya hai 
+         localStorage.setItem("ExpensesLocalstorage",JSON.stringify(state.expenses))
+       } catch (error) {
+        console.log(`failed to save the expenses to local storage : ${error}`)
+        dispatch({type:"SET_ERROR",payload:error})
+       }
+    },[state.expenses])
+
+
+    const value={
+        ...state,
+        addExpense:(expense)=>{
+            const newExpense={
+                ...expense,
+                id:crypto.randomUUID()
+            }
+            dispatch({type:"ADD_EXPENSES",payload:newExpense})
+        },
+        deleteExpense:(id)=>{
+            dispatch({type:"DELETE_EXPENSES",payload:{id}})
+        },
+        // hum id b le skty the 
+        updateExpense:(expense)=>{
+            dispatch({type:"UPDATE_EXPENSES",payload:id})
+        },
+        setExpense:(expense)=>{
+            dispatch({type:"SET_EXPENSES",payload:expense})
+        }
+    }
+  return <ExpenseContext.Provider value={{}}>{children}</ExpenseContext.Provider>;
+};
