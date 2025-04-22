@@ -39,7 +39,7 @@ export const getTotalExpenses=(expenses)=>{
 
 
 
-export const ChartData=(expenses)=>{
+export const getChartData=(expenses)=>{
     const expensesByCategory=getExpensesByCategory(expenses)
     Object.entries(expensesByCategory).filter(([_,value])=>value > 0).map(([name,value])=>(
         {

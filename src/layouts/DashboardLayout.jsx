@@ -1,8 +1,31 @@
 import React from 'react'
+import { Toaster } from 'react-hot-toast'
 
 function DashboardLayout({children}) {
   return (
     <div className='min-h-screen bg-gray-50'>
+        <Toaster position='top-right'
+        toastOptions={{
+            duration:3000,
+            style:{
+                background:"#363636",
+                color:"#fff",
+                borderRadius:"8px"
+            },
+            success:{
+                iconTheme:{
+                    primary: "#10b981",
+              secondary: "#fff",
+                }
+            },
+            error:{
+                iconTheme:{
+                    primary: "#ef4444",
+              secondary: "#fff",
+                }
+            }
+        }}
+        />
         <header className='bg-white shadow-sm'>
             <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 '>
             <div className='flex justify-center md:justify-between items-center'>
