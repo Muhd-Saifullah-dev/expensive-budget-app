@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 
 const ExpenseContext = createContext();
 
@@ -41,7 +41,7 @@ const expenseReducer = (state, action) => {
   }
 };
 
-const ExpenseProvider = ({ children }) => {
+export const ExpenseProvider = ({ children }) => {
     const [state,dispatch ]=useReducer(expenseReducer,initialState);
 
     //save expenses to local storage whenever they changed
@@ -77,5 +77,13 @@ const ExpenseProvider = ({ children }) => {
             dispatch({type:"SET_EXPENSES",payload:expense})
         }
     }
-  return <ExpenseContext.Provider value={{}}>{children}</ExpenseContext.Provider>;
+  return <ExpenseContext.Provider value={{value}}>{children}</ExpenseContext.Provider>;
 };
+
+export const useExpenses=()=>{
+  const context=useContext(ExpenseContext)
+  if(context === undefined){
+    throw new Error("useExpenses must be used within an ExpenseProvider")
+  }
+  return context
+}

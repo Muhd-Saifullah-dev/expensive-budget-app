@@ -4,11 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@theme{
-    --color-expenses: #7e69ab;
-    --color-expense-light: #9b87f5;
-    --color-expense-dark: #6259a5;
-}
+
 
 *{
     font-family: "Manrope", sans-serif;
