@@ -23,7 +23,7 @@ function ExpenseForm() {
     const handleSubmit=(e)=>{ 
         e.preventDefault()
         try {
-            isSubmitting(true)
+           setIsSubmitting(true)
             if(!description.trim()){
                 throw new Error("Please enter a description")
             }
@@ -43,6 +43,7 @@ function ExpenseForm() {
             setDate(new Date().toISOString().split("T")[0])
         } catch (error) {
             toast.error("failed to add expense")
+            console.log("error in form :: ",error)
         }
         finally{
             setIsSubmitting(false)
@@ -85,7 +86,7 @@ function ExpenseForm() {
                 <label htmlFor="category" className='block text-sm font-medium text-gray-700 mb-1'>
                Category
                 </label>
-                <select  id='category'  placeholder='0.00'
+                <select  id='category'  placeholder='what do you spend on?'
                 value={category}
                 onChange={(e)=>setCategory(e.target.value)}
 
@@ -94,7 +95,7 @@ function ExpenseForm() {
                
                 >
                     {categoryOption.map((option,index)=>(
-                        <option key={index} value={option.value}>{option.label}</option>
+                        <option key={option.value} value={option.value}>{option.label}</option>
                     ))}
 
                 </select>
@@ -114,7 +115,7 @@ function ExpenseForm() {
             </div> 
             <button type='submit' 
                 className='w-full bg-expenses text-white py-2 font-medium focus:outline-none focus:ring-2 focus:ring-expenseLight rounded-md hover:bg-expenseDark transition-all'
-                disabled={isSubmitting}
+                
             >
                 {isSubmitting ? "Adding...":"Add Expense"}
             </button>

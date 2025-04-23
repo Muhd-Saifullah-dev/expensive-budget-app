@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useReducer } from "react";
 const ExpenseContext = createContext();
 
 const initialState = {
-  expenses: [],
+  expenses:JSON.parse(localStorage.getItem("expenses")) || [],
   laoding: false,
   error: null,
 };
@@ -16,7 +16,7 @@ const expenseReducer = (state, action) => {
     case "DELETE_EXPENSES":
       return {
         ...state,
-        expenses: state.filter((expense) => action.payload.id !== expense.id),
+        expenses: state.expenses.filter((expense) => action.payload.id !== expense.id),
       };
 
     case "UPDATE_EXPENSES":
@@ -47,9 +47,9 @@ export const ExpenseProvider = ({ children }) => {
     //save expenses to local storage whenever they changed
     useEffect(()=>{
        try {
-
+        
         // expenses tho array jabhi stringify kiya hai 
-         localStorage.setItem("ExpensesLocalstorage",JSON.stringify(state.expenses))
+         localStorage.setItem("expenses",JSON.stringify(state.expenses))
        } catch (error) {
         console.log(`failed to save the expenses to local storage : ${error}`)
         dispatch({type:"SET_ERROR",payload:error})
@@ -77,13 +77,15 @@ export const ExpenseProvider = ({ children }) => {
             dispatch({type:"SET_EXPENSES",payload:expense})
         }
     }
-  return <ExpenseContext.Provider value={{value}}>{children}</ExpenseContext.Provider>;
+  return <ExpenseContext.Provider value={value}>{children}</ExpenseContext.Provider>;
 };
 
 export const useExpenses=()=>{
   const context=useContext(ExpenseContext)
+ 
   if(context === undefined){
     throw new Error("useExpenses must be used within an ExpenseProvider")
   }
+ 
   return context
 }

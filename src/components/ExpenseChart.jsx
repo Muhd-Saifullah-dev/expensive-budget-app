@@ -8,8 +8,10 @@ import ExpenseBarChart from './ExpenseBarChart'
 
 function ExpenseChart() {
     const {expenses}=useExpenses()
+    console.log("expenses :: ",expenses)
     const [chartType,setChartType]=useState("pie")
-    const chartData=getChartData(expenses || [])
+    const chartData=getChartData(expenses)
+    console.log("chartdata :: ",chartData)
     const monthlyData=getExpensesByMonth(expenses || [])
 
     if(!expenses || expenses.length===0){
@@ -58,7 +60,7 @@ function ExpenseChart() {
     </button>
         </div>
 
-        <div>{chartType==="pie"? <ExpensePieChart data={chartData}/> :<ExpenseBarChart data={chartData}/>}</div>
+        <div>{chartType==="pie"? <ExpensePieChart data={chartData}/> :<ExpenseBarChart data={monthlyData}/>}</div>
     </div>
   )
 }

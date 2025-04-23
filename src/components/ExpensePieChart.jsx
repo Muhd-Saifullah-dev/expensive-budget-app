@@ -1,5 +1,5 @@
 import React from 'react'
-import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip,Legend } from 'recharts';
 
 
 
@@ -15,6 +15,7 @@ const CATEGORY_COLORS = {
   };
 function ExpensePieChart({data}) {
    if (!data || data.length === 0){
+    console.log("pie chartData",data)
     return  <div className='text-center text-gray-500'>No data available to display</div>
     
    }
@@ -41,16 +42,16 @@ function ExpensePieChart({data}) {
     return null
    }
   return (
-    <ResponsiveContainer width={"100%"} height={300}>
+    <ResponsiveContainer width="100%" height={300}>
         <PieChart>
             <Pie
             data={data}
-            cx={"50%"}
-            cy={"50%"}
+            cx="50%"
+            cy="50%"
             labelLine={false}
             outerRadius={80}
             fill='#8884d8'
-            dataKey={value}
+            dataKey="value"
             animationDuration={750}
             animationBegin={0}
             animationEasing='ease-out'
@@ -61,11 +62,12 @@ function ExpensePieChart({data}) {
                 ))
                 
                 }
+                 </Pie>
                 <Tooltip content={<CustomTooktip/>} />
                 <Legend  layout="horizontal" verticalAlign="bottom" align="center" formatter={(value)=>{
                     <span className='text-sm  font-medium '>{value}</span>
                 }} />
-            </Pie>
+           
         </PieChart>
     </ResponsiveContainer>
   )
