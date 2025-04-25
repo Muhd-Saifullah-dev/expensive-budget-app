@@ -70,12 +70,12 @@ export const getMOnthName=(date)=>{
 }
 
 
-export const getExpensesByMonth=(expenses,numMonth)=>{
+export const getExpensesByMonth=(expenses,numMonth=6)=>{
     const now=new Date()
     const result={}
     for(let i=0;i<numMonth;i++){
         const d=new Date(now.getFullYear(),now.getMonth()-i,1)
-        const monthYear=`${d.getMOnthName(d)} ${d.getFullYear()}`
+        const monthYear=`${getMOnthName(d)} ${d.getFullYear()}`
         result[monthYear]=0
     }
 

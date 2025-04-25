@@ -44,12 +44,10 @@ const expenseReducer = (state, action) => {
 export const ExpenseProvider = ({ children }) => {
     const [state,dispatch ]=useReducer(expenseReducer,initialState);
 
-    //save expenses to local storage whenever they changed
+
     useEffect(()=>{
        try {
-        
-        // expenses tho array jabhi stringify kiya hai 
-         localStorage.setItem("expenses",JSON.stringify(state.expenses))
+       localStorage.setItem("expenses",JSON.stringify(state.expenses))
        } catch (error) {
         console.log(`failed to save the expenses to local storage : ${error}`)
         dispatch({type:"SET_ERROR",payload:error})

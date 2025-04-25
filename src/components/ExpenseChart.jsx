@@ -11,9 +11,9 @@ function ExpenseChart() {
     console.log("expenses :: ",expenses)
     const [chartType,setChartType]=useState("pie")
     const chartData=getChartData(expenses)
-    console.log("chartdata :: ",chartData)
-    const monthlyData=getExpensesByMonth(expenses || [])
 
+    const monthlyData=getExpensesByMonth(expenses)
+    console.log("monthly data",monthlyData)
     if(!expenses || expenses.length===0){
         return  <div className='bg-white rounded-lg shadow-md text-center  p-6'>
 
