@@ -41,8 +41,8 @@ export const getTotalExpenses=(expenses)=>{
 
 export const getChartData=(expenses)=>{
     const expensesByCategory=getExpensesByCategory(expenses)
-    console.log("expense in function chartDatat :: ",expensesByCategory)
-   return Object.entries(expensesByCategory).filter(([_,value])=>value > 0).map(([name,value])=>{console.log("name in map ::",name)
+    
+   return Object.entries(expensesByCategory).filter(([_,value])=>value > 0).map(([name,value])=>{
     return    {
             name:name.charAt(0).toUpperCase()+ name.slice(1),
             value,
